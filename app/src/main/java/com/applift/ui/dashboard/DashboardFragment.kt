@@ -1,34 +1,44 @@
 package com.applift.ui.dashboard
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.fragment.app.Fragment
+import android.view.ViewGroup
 import androidx.navigation.Navigation
 import com.applift.R
 import com.applift.data.ViewModelFactory
-import com.applift.di.Injectable
-import kotlinx.android.synthetic.main.dashboard_fragment.*
+import com.applift.databinding.DashboardFragmentBinding
+import com.applift.ui.base.BaseFragment
 import javax.inject.Inject
 
-class DashboardFragment : Fragment(R.layout.dashboard_fragment), Injectable {
+class DashboardFragment : BaseFragment() {
 
-    companion object {
-        fun newInstance() = DashboardFragment()
-    }
+    private lateinit var binding: DashboardFragmentBinding
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-
     private lateinit var viewModel: DashboardViewModel
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel = viewModelFactory.create(DashboardViewModel::class.java)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = DashboardFragmentBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        fab.setOnClickListener {
-            Navigation.findNavController(it)
-                .navigate(R.id.action_dashboardFragment_to_projectFragment)
+    override fun initViewBinding() {
+        binding.fab.setOnClickListener {
+            Navigation.findNavController(it).navigate(R.id.action_dashboardFragment_to_projectFragment)
         }
+    }
+
+    override fun initializeViewModel() {
+        viewModel = viewModelFactory.create(DashboardViewModel::class.java)
+    }
+
+    override fun observeViewModel() {
     }
 }

@@ -15,9 +15,15 @@ import androidx.test.espresso.action.ViewActions.click
 
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.applift.App
 import com.applift.R
+import com.applift.data.ViewModelFactory
+import com.applift.di.AppInjector
+import com.applift.di.DaggerAppComponent
 
 import com.google.common.truth.Truth.assertThat
+import dagger.android.support.AndroidSupportInjection
+import org.junit.Before
 
 
 @RunWith(AndroidJUnit4::class)

@@ -1,24 +1,39 @@
 package com.applift.ui.task
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.applift.data.ViewModelFactory
-import com.applift.di.Injectable
+import com.applift.databinding.TaskFragmentBinding
+import com.applift.ui.base.BaseFragment
 import javax.inject.Inject
 
-class TaskFragment : Fragment(), Injectable {
+class TaskFragment : BaseFragment() {
 
-    companion object {
-        fun newInstance() = TaskFragment()
-    }
+    private lateinit var binding: TaskFragmentBinding
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
     private lateinit var viewModel: TaskViewModel
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = TaskFragmentBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun initViewBinding() {
+    }
+
+    override fun initializeViewModel() {
         viewModel = viewModelFactory.create(TaskViewModel::class.java)
+    }
+
+    override fun observeViewModel() {
     }
 }

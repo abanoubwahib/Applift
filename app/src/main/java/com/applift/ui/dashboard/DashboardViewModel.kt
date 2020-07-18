@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.applift.data.repository.DataRepositorySource
 import javax.inject.Inject
 
-class DashboardViewModel@Inject
-constructor(private val dataRepositoryRepository: DataRepositorySource) : ViewModel() {
-    // TODO: Implement the ViewModel
+class DashboardViewModel
+@Inject constructor(private val mDataRepo: DataRepositorySource) : ViewModel() {
+
 }

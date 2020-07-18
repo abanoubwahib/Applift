@@ -1,55 +1,41 @@
-package com.applift.ui.dashboard
+package com.applift.ui.project
 
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.navigation.Navigation
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
-import org.junit.Test
-
-import org.junit.runner.RunWith
-
-
-import androidx.test.espresso.Espresso.onView
-
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions.click
-
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.applift.App
 import com.applift.R
-import com.applift.data.ViewModelFactory
-import com.applift.di.AppInjector
-import com.applift.di.DaggerAppComponent
-
+import org.junit.Test
+import org.junit.runner.RunWith
 import com.google.common.truth.Truth.assertThat
-import dagger.android.support.AndroidSupportInjection
-import org.junit.Before
-
 
 @RunWith(AndroidJUnit4::class)
-class DashboardFragmentTest {
+class ProjectFragmentNavigationTest {
 
     @Test
-    fun testNavigateToProject() {
-
+    fun testNavigateToTask() {
         val navController = TestNavHostController(
             ApplicationProvider.getApplicationContext()
         ).apply {
             setGraph(R.navigation.home)
-            setCurrentDestination(R.id.dashboardFragment)
+            setCurrentDestination(R.id.projectFragment)
         }
 
-        val dashboardScenario = launchFragmentInContainer<DashboardFragment>()
+        val dashboardScenario = launchFragmentInContainer<ProjectFragment>()
 
         dashboardScenario.onFragment { fragment ->
             Navigation.setViewNavController(fragment.requireView(), navController)
         }
 
-        onView(withId(R.id.fab)).perform(click())
+        Espresso.onView(ViewMatchers.withId(R.id.fab)).perform(click())
 
         val backStack = navController.backStack
         val currentDestination = backStack.last()
 
-        assertThat(currentDestination.destination.id).isEqualTo(R.id.projectFragment)
+        assertThat(currentDestination.destination.id).isEqualTo(R.id.taskFragment)
     }
 }

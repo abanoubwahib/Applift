@@ -27,11 +27,11 @@ class TaskFragment : BaseFragment() {
         return binding.root
     }
 
-    override fun initViewBinding() {
-    }
-
     override fun initializeViewModel() {
         viewModel = viewModelFactory.create(TaskViewModel::class.java)
+    }
+
+    override fun initViewBinding() {
     }
 
     override fun observeViewModel() {

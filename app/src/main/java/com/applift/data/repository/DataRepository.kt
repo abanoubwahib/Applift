@@ -12,6 +12,8 @@ class DataRepository @Inject
 constructor(private val localData: LocalData) :
     DataRepositorySource {
 
+    private var project: Project? = null
+
     override suspend fun insertProject(project: Project): Flow<Resource<Long>> {
         TODO("Not yet implemented")
     }
@@ -38,5 +40,13 @@ constructor(private val localData: LocalData) :
 
     override suspend fun getAllComments(task_id: Int): Flow<Resource<List<Task>>> {
         TODO("Not yet implemented")
+    }
+
+    override fun saveProject(project: Project) {
+        this.project = project
+    }
+
+    override fun getProject(): Project? {
+        return this.project
     }
 }

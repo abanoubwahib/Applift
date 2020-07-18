@@ -12,4 +12,9 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
+    <style name="MyDialogTheme" parent="android:Theme.Holo.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
 </resources>

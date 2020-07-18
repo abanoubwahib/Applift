@@ -17,4 +17,8 @@ interface DataRepositorySource {
 
     suspend fun insertComment(comment: Comment): Flow<Resource<Long>>
     suspend fun getAllComments(task_id: Int): Flow<Resource<List<Task>>>
+
+    fun saveProject(project: Project)
+
+    fun getProject(): Project?
 }

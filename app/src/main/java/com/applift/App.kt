@@ -1,0 +1,29 @@
+package com.applift
+
+import android.app.Activity
+import android.app.Application
+import android.content.Context
+import androidx.multidex.MultiDexApplication
+import dagger.android.DispatchingAndroidInjector
+import com.applift.di.AppInjector
+import dagger.android.AndroidInjector
+import dagger.android.HasAndroidInjector
+import javax.inject.Inject
+
+class App : MultiDexApplication(), HasAndroidInjector {
+
+    @Inject
+    lateinit var androidInjector: DispatchingAndroidInjector<Any>
+
+    override fun androidInjector(): AndroidInjector<Any> = androidInjector
+
+    override fun onCreate() {
+        super.onCreate()
+        context = applicationContext
+        AppInjector.init(this)
+    }
+
+    companion object {
+        lateinit var context: Context
+    }
+}

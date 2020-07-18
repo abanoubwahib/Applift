@@ -2,7 +2,7 @@ package com.applift.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.applift.ui.ViewModelFactory
+import com.applift.data.ViewModelFactory
 import com.applift.ui.dashboard.DashboardViewModel
 import com.applift.ui.project.ProjectViewModel
 import com.applift.ui.task.TaskViewModel

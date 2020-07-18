@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home"
+    app:startDestination="@id/dashboardFragment">
+
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.applift.ui.dashboard.DashboardFragment"
+        android:label="dashboard_fragment"
+        tools:layout="@layout/dashboard_fragment">
+
+        <action
+            android:id="@+id/action_dashboardFragment_to_projectFragment"
+            app:destination="@id/projectFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/projectFragment"
+        android:name="com.applift.ui.project.ProjectFragment"
+        android:label="project_fragment"
+        tools:layout="@layout/project_fragment" >
+        <action
+            android:id="@+id/action_projectFragment_to_taskFragment"
+            app:destination="@id/taskFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/taskFragment"
+        android:name="com.applift.ui.task.TaskFragment"
+        android:label="task_fragment"
+        tools:layout="@layout/task_fragment" />
+
+</navigation>

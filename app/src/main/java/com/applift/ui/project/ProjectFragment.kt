@@ -3,7 +3,7 @@ package com.applift.ui.project
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.applift.R
-import com.applift.ui.ViewModelFactory
+import com.applift.data.ViewModelFactory
 import com.applift.di.Injectable
 import javax.inject.Inject
 

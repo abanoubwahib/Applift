@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.applift.ui
+package com.applift.data
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

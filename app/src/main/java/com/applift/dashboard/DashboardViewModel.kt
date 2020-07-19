@@ -1,4 +1,4 @@
-package com.applift.ui.dashboard
+package com.applift.dashboard
 
 import android.util.Log
 import androidx.annotation.VisibleForTesting
@@ -17,11 +17,7 @@ import javax.inject.Inject
 class DashboardViewModel
 @Inject constructor(private val mDataRepo: DataRepositorySource) : ViewModel() {
 
-    init {
-        getProjects()
-    }
-
-    private fun getProjects() {
+    fun getProjects() {
         viewModelScope.launch {
             wrapEspressoIdlingResource {
                 mDataRepo.getAllProjects().collect { projects ->

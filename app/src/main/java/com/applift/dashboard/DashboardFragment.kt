@@ -1,4 +1,4 @@
-package com.applift.ui.dashboard
+package com.applift.dashboard
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,12 +13,12 @@ import com.applift.databinding.FragmentDashboardBinding
 import com.applift.utils.Event
 import com.applift.extensions.observe
 import com.applift.extensions.showToast
-import com.applift.extensions.toGone
-import com.applift.extensions.toVisible
 import com.applift.listeners.AddProjectCallback
 import com.applift.ui.base.BaseFragment
-import com.applift.ui.dashboard.adapter.ProjectsAdapter
-import com.applift.ui.dashboard.dialog.AddProjectFragment
+import com.applift.dashboard.adapter.ProjectsAdapter
+import com.applift.dashboard.dialog.AddProjectFragment
+import com.applift.extensions.toGone
+import com.applift.extensions.toVisible
 import javax.inject.Inject
 
 @Suppress("DEPRECATION")
@@ -57,6 +57,7 @@ class DashboardFragment : BaseFragment(), AddProjectCallback {
 
     override fun initializeViewModel() {
         viewModel = viewModelFactory.create(DashboardViewModel::class.java)
+        viewModel.getProjects()
     }
 
     override fun observeViewModel() {

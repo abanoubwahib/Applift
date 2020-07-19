@@ -1,4 +1,4 @@
-package com.applift.ui.dashboard.adapter
+package com.applift.dashboard.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import com.applift.data.model.Project

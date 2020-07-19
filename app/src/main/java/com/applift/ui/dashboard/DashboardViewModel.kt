@@ -1,39 +1,69 @@
 package com.applift.ui.dashboard
 
+import android.util.Log
 import androidx.annotation.VisibleForTesting
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.applift.data.Resource
+import androidx.lifecycle.viewModelScope
 import com.applift.data.model.Project
 import com.applift.data.repository.DataRepositorySource
-import com.applift.listeners.AddProjectCallback
-import com.applift.ui.dialog.AddProjectFragment
+import com.applift.utils.Event
+import com.applift.utils.wrapEspressoIdlingResource
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class DashboardViewModel
-@Inject constructor(private val mDataRepo: DataRepositorySource) : ViewModel(), AddProjectCallback {
+@Inject constructor(private val mDataRepo: DataRepositorySource) : ViewModel() {
+
+    init {
+        getProjects()
+    }
+
+    private fun getProjects() {
+        viewModelScope.launch {
+            wrapEspressoIdlingResource {
+                mDataRepo.getAllProjects().collect { projects ->
+                    if (projects.isEmpty()) {
+                        _noDataLiveData.value = Event(Any())
+                    } else {
+                        _projectsLiveData.value = projects
+                    }
+                }
+            }
+        }
+    }
+
+    fun onProjectAdd(project_name: String) {
+        viewModelScope.launch {
+            wrapEspressoIdlingResource {
+                mDataRepo.insertProject(project_name).collect {
+                    Log.d("Data Inserted", it.toString())
+                    getProjects()
+                }
+            }
+        }
+    }
 
     fun handleProjectClicked(project: Project) {
         mDataRepo.saveProject(project)
-        _navigateToTasksLiveData.value = null
-    }
-
-    fun showAddDialog(fragmentManager: FragmentManager?) {
-        val dialogFragment = AddProjectFragment(this)
-        dialogFragment.isCancelable = false
-        if (fragmentManager != null)
-            dialogFragment.show(fragmentManager, "dialog_add_project")
-    }
-
-    override fun onProjectAdded(project_name: String) {
+        _openProjectTasksPrivate.value = Event(Any())
     }
 
     @VisibleForTesting
-    val _projectsLiveData = MutableLiveData<Resource<List<Project>>>()
-    val projectsLiveData: LiveData<Resource<List<Project>>> get() = _projectsLiveData
+    val _projectsLiveData = MutableLiveData<List<Project>>()
+    val projectsLiveData: LiveData<List<Project>> get() = _projectsLiveData
 
-    val _navigateToTasksLiveData = MutableLiveData<Boolean>()
-    val navigateToTasksLiveData: LiveData<Boolean> get() = _navigateToTasksLiveData
+    @VisibleForTesting
+    val _insertProjectLiveData = MutableLiveData<Long>()
+    val insertProjectLiveData: LiveData<Long> get() = _insertProjectLiveData
+
+    @VisibleForTesting
+    val _noDataLiveData = MutableLiveData<Event<Any>>()
+    val noDataLiveData: LiveData<Event<Any>> get() = _noDataLiveData
+
+    @VisibleForTesting
+    val _openProjectTasksPrivate = MutableLiveData<Event<Any>>()
+    val openProjectTasksPrivate: LiveData<Event<Any>> get() = _openProjectTasksPrivate
 }

@@ -5,4 +5,11 @@
     <string name="network_error">Network error, could get data,please try again!</string>
     <string name="project_name">Project</string>
     <string name="add">Add</string>
+    <string name="projects">Projects</string>
+    <string name="no_data_found">No Data Found</string>
+    <string name="project_added_successfully">Project Added</string>
+    <string name="project_added_failure">Failed to add project ,please try again later</string>
+    <string name="tasks">Tasks</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
 </resources>

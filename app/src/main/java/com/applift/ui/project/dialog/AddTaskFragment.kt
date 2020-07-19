@@ -1,4 +1,4 @@
-package com.applift.ui.dialog
+package com.applift.ui.project.dialog
 
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -9,11 +9,13 @@ import android.view.Window
 import androidx.fragment.app.DialogFragment
 import com.applift.R
 import com.applift.databinding.AddProjectFragmentBinding
+import com.applift.databinding.AddTaskFragmentBinding
 import com.applift.listeners.AddProjectCallback
+import com.applift.listeners.AddTaskCallback
 
-class AddProjectFragment(private val callback: AddProjectCallback) : DialogFragment() {
+class AddTaskFragment(private val callback: AddTaskCallback) : DialogFragment() {
 
-    private lateinit var binding: AddProjectFragmentBinding
+    private lateinit var binding: AddTaskFragmentBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,17 +27,18 @@ class AddProjectFragment(private val callback: AddProjectCallback) : DialogFragm
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = AddProjectFragmentBinding.inflate(inflater, container, false)
+        binding = AddTaskFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.add.setOnClickListener {
-            if (binding.project.text.toString().isNotEmpty()) {
-                callback.onProjectAdded(binding.project.text.toString())
-                dismiss()
+            if (binding.title.equals("") || binding.description.equals("")) {
+                return@setOnClickListener
             }
+            callback.onTaskAdded(binding.title.text.toString(), binding.description.text.toString())
+            dismiss()
         }
     }
 

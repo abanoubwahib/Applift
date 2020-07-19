@@ -1,16 +1,14 @@
 package com.applift.data.persistence
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.applift.data.model.Project
-import io.reactivex.Single
 
 @Dao
 interface ProjectDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertProject(project: Project): Single<Long>
+    suspend fun insertProject(project: Project): Long
 
     @Query("Select * from project")
-    fun getAllProjects(): LiveData<List<Project>>
+    suspend fun getAllProjects(): List<Project>
 }

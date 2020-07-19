@@ -25,7 +25,7 @@ class AppModule {
     @Provides
     fun provideMainDatabase(app: App): MainDatabase {
         return Room.databaseBuilder(app, MainDatabase::class.java, "applift-db")
-            .fallbackToDestructiveMigration().allowMainThreadQueries().build()
+            .fallbackToDestructiveMigration().build()
     }
 
     @Singleton

@@ -4,22 +4,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.applift.R
-import com.applift.data.Resource
 import com.applift.data.ViewModelFactory
 import com.applift.data.model.Project
 import com.applift.databinding.DashboardFragmentBinding
+import com.applift.utils.Event
 import com.applift.extensions.observe
+import com.applift.extensions.showToast
 import com.applift.extensions.toGone
 import com.applift.extensions.toVisible
+import com.applift.listeners.AddProjectCallback
 import com.applift.ui.base.BaseFragment
 import com.applift.ui.dashboard.adapter.ProjectsAdapter
+import com.applift.ui.dashboard.dialog.AddProjectFragment
 import javax.inject.Inject
 
 @Suppress("DEPRECATION")
-class DashboardFragment : BaseFragment() {
+class DashboardFragment : BaseFragment(), AddProjectCallback {
 
     private lateinit var binding: DashboardFragmentBinding
 
@@ -27,6 +30,10 @@ class DashboardFragment : BaseFragment() {
     lateinit var viewModelFactory: ViewModelFactory
 
     private lateinit var viewModel: DashboardViewModel
+
+    override fun onProjectAdded(project_name: String) {
+        viewModel.onProjectAdd(project_name)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,7 +51,7 @@ class DashboardFragment : BaseFragment() {
         binding.rvProjects.setHasFixedSize(true)
 
         binding.fab.setOnClickListener {
-            viewModel.showAddDialog(fragmentManager)
+            showAddProjectDialog()
         }
     }
 
@@ -53,39 +60,39 @@ class DashboardFragment : BaseFragment() {
     }
 
     override fun observeViewModel() {
-        observe(viewModel.projectsLiveData, ::handleProjectList)
-        observe(viewModel.navigateToTasksLiveData, ::handleNavigateToTasks)
+        observe(viewModel.projectsLiveData, ::bindListData)
+        observe(viewModel.insertProjectLiveData, ::showToast)
+        observe(viewModel.noDataLiveData, ::showNoDataView)
+        observe(viewModel.openProjectTasksPrivate, ::navigateToTasks)
     }
 
-    private fun handleNavigateToTasks(navigateToTasks: Boolean) {
-        if(navigateToTasks)
-        Navigation.findNavController(binding.fab)
-            .navigate(R.id.action_dashboardFragment_to_projectFragment)
+    private fun showToast(l: @ParameterName(name = "t") Long) {
+        if (l != -1L)
+            showToast(getString(R.string.project_added_successfully))
+        else
+            showToast(getString(R.string.project_added_failure))
     }
 
-    private fun handleProjectList(projectModel: Resource<List<Project>>) {
-        when (projectModel) {
-            is Resource.Loading -> showLoadingView()
-            is Resource.Success -> projectModel.data?.let {
-                hideLoadingView()
-                bindListData(projects = it)
-            }
-            is Resource.DataError -> {
-                hideLoadingView()
-            }
-        }
-    }
-
-    private fun hideLoadingView() {
-        binding.progressBar.toGone()
-    }
-
-    private fun showLoadingView() {
-        binding.progressBar.toVisible()
+    private fun showNoDataView(event: @ParameterName(name = "t") Event<Any>) {
+        binding.relativeNoData.toVisible()
+        binding.rvProjects.toGone()
     }
 
     private fun bindListData(projects: List<Project>) {
+        binding.rvProjects.toVisible()
+        binding.relativeNoData.toGone()
         val adapter = ProjectsAdapter(dashboardViewModel = viewModel, projects = projects)
         binding.rvProjects.adapter = adapter
+    }
+
+    private fun showAddProjectDialog() {
+        val dialogFragment = AddProjectFragment(this)
+        dialogFragment.isCancelable = true
+        if (fragmentManager != null)
+            dialogFragment.show(fragmentManager!!, "dialog_add_project")
+    }
+
+    private fun navigateToTasks(event: @ParameterName(name = "t") Event<Any>) {
+        findNavController().navigate(R.id.action_dashboardFragment_to_projectFragment, null)
     }
 }

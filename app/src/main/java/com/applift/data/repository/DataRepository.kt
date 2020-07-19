@@ -1,11 +1,17 @@
 package com.applift.data.repository
 
-import com.applift.data.Resource
+import android.annotation.SuppressLint
+import android.os.Build
 import com.applift.data.model.Comment
 import com.applift.data.model.Project
 import com.applift.data.model.Task
 import com.applift.data.local.LocalData
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 import javax.inject.Inject
 
 class DataRepository @Inject
@@ -13,33 +19,58 @@ constructor(private val localData: LocalData) :
     DataRepositorySource {
 
     private var project: Project? = null
+    private var task: Task? = null
 
-    override suspend fun insertProject(project: Project): Flow<Resource<Long>> {
-        TODO("Not yet implemented")
+    @ExperimentalCoroutinesApi
+    override suspend fun insertProject(project_name: String): Flow<Long> {
+        val project = Project(project_name)
+        return localData.insertProject(project)
     }
 
-    override suspend fun getAllProjects(): Flow<Resource<List<Project>>> {
-        TODO("Not yet implemented")
+    @ExperimentalCoroutinesApi
+    override suspend fun getAllProjects(): Flow<List<Project>> {
+        return localData.getAllProjects()
     }
 
-    override suspend fun insertTask(task: Task): Flow<Resource<Long>> {
-        TODO("Not yet implemented")
+    @SuppressLint("SimpleDateFormat")
+    @ExperimentalCoroutinesApi
+    override suspend fun insertTask(taskName: String, taskDescription: String): Flow<Long> {
+        val date: String?
+        date = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val current = LocalDateTime.now()
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
+            current.format(formatter)
+        } else {
+            val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
+            sdf.format(Date())
+        }
+
+        return localData.insertTask(Task(
+            title = taskName,
+            description = taskDescription,
+            createdDate = date,
+            project_id = project?.id.toString()
+        ))
     }
 
-    override suspend fun updateTask(task: Task): Flow<Resource<Long>> {
-        TODO("Not yet implemented")
+    @ExperimentalCoroutinesApi
+    override suspend fun updateTask(task: Task): Flow<Int> {
+        return localData.updateTask(task)
     }
 
-    override suspend fun getAllTasks(project_id: Int): Flow<Resource<List<Task>>> {
-        TODO("Not yet implemented")
+    @ExperimentalCoroutinesApi
+    override suspend fun getAllTasks(): Flow<List<Task>>? {
+        return project?.id?.let { localData.getAllTasks(it) }
     }
 
-    override suspend fun insertComment(comment: Comment): Flow<Resource<Long>> {
-        TODO("Not yet implemented")
+    @ExperimentalCoroutinesApi
+    override suspend fun insertComment(comment: Comment): Flow<Long> {
+        return localData.insertComment(comment)
     }
 
-    override suspend fun getAllComments(task_id: Int): Flow<Resource<List<Task>>> {
-        TODO("Not yet implemented")
+    @ExperimentalCoroutinesApi
+    override suspend fun getAllComments(): Flow<List<Comment>>? {
+        return task?.id?.let { localData.getAllComments(it) }
     }
 
     override fun saveProject(project: Project) {
@@ -48,5 +79,13 @@ constructor(private val localData: LocalData) :
 
     override fun getProject(): Project? {
         return this.project
+    }
+
+    override fun saveTask(task: Task) {
+        this.task = task
+    }
+
+    override fun getTask(): Task? {
+        return this.task
     }
 }

@@ -1,11 +1,11 @@
 <resources>
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Add attributes here -->
+        <item name="android:windowActionBar">false</item>
+        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="textAppearanceButton">@style/AppTextAppearance.Button</item>
     </style>
 
     <style name="AppTextAppearance.Button" parent="TextAppearance.MaterialComponents.Button">

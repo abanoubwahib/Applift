@@ -1,19 +1,18 @@
 package com.applift.data.persistence
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.applift.data.model.Task
-import io.reactivex.Single
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TaskDao {
 
     @Insert
-    fun insertTask(task: Task): Single<Long>
+    suspend fun insertTask(task: Task): Long
 
     @Update
-    fun updateTask(task: Task): Single<Int>
+    suspend fun updateTask(task: Task): Int
 
     @Query("Select * from task WHERE project_id = :project_id")
-    fun getAllTasks(project_id: Int): LiveData<List<Task>>
+    suspend fun getAllTasks(project_id: Int): List<Task>
 }

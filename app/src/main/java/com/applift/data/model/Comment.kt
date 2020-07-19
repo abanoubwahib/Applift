@@ -7,10 +7,6 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "comment")
 data class Comment(
-    @NonNull
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    var id: Int,
 
     @ColumnInfo(name = "task_id")
     var task_id: Int,
@@ -18,6 +14,11 @@ data class Comment(
     @ColumnInfo(name = "comment_str")
     var comment_str: Int
 ) {
+
+    @NonNull
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    var id: Int = 0
 
     override fun toString(): String {
         return "{id=$id, task_id=$task_id, comment_str=$comment_str}"

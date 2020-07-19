@@ -9,7 +9,6 @@ class ProjectsViewHolder(private val itemBinding: ProjectItemBinding) : Recycler
 
     fun bind(project: Project, recyclerItemListener: ProjectItemListener) {
         itemBinding.projectName.text = project.name
-        itemBinding.rlNewsItem.setOnClickListener { recyclerItemListener.onItemSelected(project) }
+        itemBinding.rlProjectItem.setOnClickListener { recyclerItemListener.onItemSelected(project) }
     }
 }
-

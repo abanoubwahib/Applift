@@ -8,7 +8,6 @@ import com.applift.databinding.ProjectItemBinding
 import com.applift.listeners.ProjectItemListener
 import com.applift.ui.dashboard.DashboardViewModel
 
-
 class ProjectsAdapter(private val dashboardViewModel: DashboardViewModel,
                       private val projects: List<Project>) : RecyclerView.Adapter<ProjectsViewHolder>() {
 

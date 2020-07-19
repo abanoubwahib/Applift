@@ -10,6 +10,7 @@ import com.applift.data.model.Comment
 import com.applift.data.model.Task
 import com.applift.data.repository.DataRepositorySource
 import com.applift.utils.Event
+import com.applift.utils.IN_REVIEW
 import com.applift.utils.wrapEspressoIdlingResource
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -65,8 +66,8 @@ constructor(private val mDataRepo: DataRepositorySource) : ViewModel() {
     fun onSendToReviewClicked() {
         viewModelScope.launch {
             wrapEspressoIdlingResource {
-                mDataRepo.updateTaskStatus()?.collect {
-                    if (it != -1L) {
+                mDataRepo.updateTaskStatus(IN_REVIEW)?.collect {
+                    if (it != -1) {
                         getTaskDetails()
                     }
                 }

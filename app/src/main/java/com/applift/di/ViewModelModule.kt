@@ -6,6 +6,7 @@ import com.applift.data.ViewModelFactory
 import com.applift.ui.dashboard.DashboardViewModel
 import com.applift.ui.project.ProjectViewModel
 import com.applift.ui.task.TaskViewModel
+import com.applift.ui.task.dialog.EditTaskViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -28,6 +29,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(TaskViewModel::class)
     abstract fun bindTaskViewModel(viewModel: TaskViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(EditTaskViewModel::class)
+    abstract fun bindEditTaskViewModel(viewModel: EditTaskViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

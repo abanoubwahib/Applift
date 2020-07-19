@@ -9,6 +9,7 @@ import com.applift.data.local.LocalData
 import com.applift.utils.IN_REVIEW
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -67,6 +68,11 @@ constructor(private val localData: LocalData) :
     }
 
     @ExperimentalCoroutinesApi
+    override suspend fun updateTaskStatus(status: String): Flow<Int>? {
+        return task?.id?.let { localData.updateTaskStatus(status, task?.id!!) }
+    }
+
+    @ExperimentalCoroutinesApi
     override suspend fun insertComment(commentStr: String): Flow<Long>? {
         return task?.id?.let {
             val comment = Comment(it, commentStr)
@@ -77,15 +83,6 @@ constructor(private val localData: LocalData) :
     @ExperimentalCoroutinesApi
     override suspend fun getAllComments(): Flow<List<Comment>>? {
         return task?.id?.let { localData.getAllComments(it) }
-    }
-
-    @ExperimentalCoroutinesApi
-    override suspend fun updateTaskStatus(): Flow<Long>? {
-        if (!task?.status.equals(IN_REVIEW)) {
-            task?.status = IN_REVIEW
-            return task?.let { localData.insertTask(it) }
-        }
-        return null
     }
 
     @ExperimentalCoroutinesApi

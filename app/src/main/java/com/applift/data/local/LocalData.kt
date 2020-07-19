@@ -55,6 +55,13 @@ class LocalData @Inject constructor(
     }
 
     @ExperimentalCoroutinesApi
+    suspend fun updateTaskStatus(status: String, task_id: Int): Flow<Int> {
+        return flow {
+            emit(mTaskDao.updateTask(status, task_id.toString()))
+        }.flowOn(Dispatchers.IO)
+    }
+
+    @ExperimentalCoroutinesApi
     suspend fun insertComment(comment: Comment): Flow<Long> {
         return flow {
             emit(mCommentDao.insertComment(comment))

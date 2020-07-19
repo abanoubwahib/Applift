@@ -7,15 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.lifecycleScope
 import com.applift.R
+import com.applift.data.ViewModelFactory
 import com.applift.data.model.Task
-import com.applift.data.repository.DataRepositorySource
 import com.applift.databinding.DialogEditTaskFragmentBinding
+import com.applift.extensions.observe
 import com.applift.listeners.EditTaskCallback
-import com.applift.utils.wrapEspressoIdlingResource
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
 class EditTaskFragment(private val callback: EditTaskCallback) :
@@ -24,11 +22,35 @@ class EditTaskFragment(private val callback: EditTaskCallback) :
     private lateinit var binding: DialogEditTaskFragmentBinding
 
     @Inject
-    lateinit var mDataRepo: DataRepositorySource
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private lateinit var viewModel: EditTaskViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidSupportInjection.inject(this)
+
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, R.style.MyDialogTheme)
+
+        viewModel = viewModelFactory.create(EditTaskViewModel::class.java)
+
+        observe(viewModel.taskDetailsLiveData, ::bindData)
+
+        viewModel.getTaskDetails()
+    }
+
+    private fun bindData(task: @ParameterName(name = "t") Task) {
+        binding.title.setText(task.title)
+        binding.description.setText(task.description)
+
+        binding.edit.setOnClickListener {
+            if (binding.title.toString().isEmpty() || binding.description.toString()
+                    .isEmpty()) {
+                return@setOnClickListener
+            }
+            updateTask(task)
+            dismiss()
+        }
     }
 
     override fun onCreateView(
@@ -40,30 +62,9 @@ class EditTaskFragment(private val callback: EditTaskCallback) :
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        lifecycleScope.launch {
-            wrapEspressoIdlingResource {
-                mDataRepo.getTaskById()?.collect { task ->
-                    binding.title.setText(task.title)
-                    binding.description.setText(task.description)
-
-                    binding.edit.setOnClickListener {
-                        if (binding.title.toString().isEmpty() || binding.description.toString()
-                                .isEmpty()) {
-                            return@setOnClickListener
-                        }
-                        updateTask(task)
-                        dismiss()
-                    }
-                }
-            }
-        }
-    }
-
     private fun updateTask(task: Task) {
         task.title = binding.title.text.toString()
-        task.description = binding.title.text.toString()
+        task.description = binding.description.text.toString()
         callback.onTaskUpdated(task)
     }
 

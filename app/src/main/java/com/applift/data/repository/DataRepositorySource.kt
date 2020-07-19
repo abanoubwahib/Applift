@@ -21,7 +21,7 @@ interface DataRepositorySource {
 
     suspend fun updateTask(task: Task): Flow<Long>?
 
-    suspend fun updateTaskStatus(): Flow<Long>?
+    suspend fun updateTaskStatus(status: String): Flow<Int>?
 
     suspend fun getTaskById(): Flow<Task>?
 

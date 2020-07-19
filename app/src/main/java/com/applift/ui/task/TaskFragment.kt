@@ -11,6 +11,7 @@ import com.applift.data.ViewModelFactory
 import com.applift.data.model.Comment
 import com.applift.data.model.Task
 import com.applift.databinding.FragmentTaskBinding
+import com.applift.extensions.hideKeyboard
 import com.applift.extensions.observe
 import com.applift.extensions.toGone
 import com.applift.extensions.toVisible
@@ -59,8 +60,10 @@ class TaskFragment : BaseFragment(), TaskPopupMenuListener, EditTaskCallback {
         }
 
         binding.send.setOnClickListener {
+            binding.comment.hideKeyboard()
             if (binding.comment.text.toString().isNotEmpty()) {
                 viewModel.addComment(binding.comment.text.toString())
+                binding.comment.setText("")
             }
         }
     }
@@ -91,6 +94,7 @@ class TaskFragment : BaseFragment(), TaskPopupMenuListener, EditTaskCallback {
     private fun bindDetailsData(task: @ParameterName(name = "t") Task) {
         binding.title.text = task.title
         binding.description.text = task.description
+        binding.createdDate.text = task.createdDate
         binding.status.text = task.status
         if (task.status.equals(TO_DO))
             binding.status.setTextColor(ContextCompat.getColor(context!!, R.color.black))

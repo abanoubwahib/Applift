@@ -3,6 +3,7 @@ package com.applift.di
 import com.applift.ui.dashboard.DashboardFragment
 import com.applift.ui.project.ProjectFragment
 import com.applift.ui.task.TaskFragment
+import com.applift.ui.task.dialog.EditTaskFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -18,4 +19,7 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeTaskFragment(): TaskFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeEditTaskFragment(): EditTaskFragment
 }

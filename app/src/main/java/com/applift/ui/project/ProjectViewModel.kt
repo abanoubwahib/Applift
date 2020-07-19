@@ -17,11 +17,7 @@ import javax.inject.Inject
 class ProjectViewModel
 @Inject constructor(private val mDataRepo: DataRepositorySource) : ViewModel() {
 
-    init {
-        getTasks()
-    }
-
-    private fun getTasks() {
+    fun getTasks() {
         viewModelScope.launch {
             wrapEspressoIdlingResource {
                 mDataRepo.getAllTasks()?.collect { tasks ->
@@ -33,6 +29,10 @@ class ProjectViewModel
                 }
             }
         }
+    }
+
+    fun getScreenTitle(): String? {
+        return mDataRepo.getSavedProjectTitle()
     }
 
     fun handleTaskClicked(task: Task) {

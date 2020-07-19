@@ -1,7 +1,5 @@
 package com.applift
 
-import android.app.Activity
-import android.app.Application
 import android.content.Context
 import androidx.multidex.MultiDexApplication
 import dagger.android.DispatchingAndroidInjector

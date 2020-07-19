@@ -50,6 +50,9 @@ class ProjectFragment : BaseFragment(), AddTaskCallback {
 
     override fun initializeViewModel() {
         viewModel = viewModelFactory.create(ProjectViewModel::class.java)
+        viewModel.getScreenTitle()?.let {
+            binding.projectTitle.text = it
+        }
     }
 
     override fun observeViewModel() {
@@ -57,6 +60,8 @@ class ProjectFragment : BaseFragment(), AddTaskCallback {
         observe(viewModel.insertTaskLiveData, ::showToast)
         observe(viewModel.noDataLiveData, ::showNoDataView)
         observe(viewModel.openTaskDetailsPrivate, ::navigateToTaskDetails)
+
+        viewModel.getTasks()
     }
 
     private fun showAddTaskDialog() {

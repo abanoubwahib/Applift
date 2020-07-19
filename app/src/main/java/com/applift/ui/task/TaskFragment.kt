@@ -76,6 +76,9 @@ class TaskFragment : BaseFragment(), TaskPopupMenuListener, EditTaskCallback {
         observe(viewModel.taskDetailsLiveData, ::bindDetailsData)
         observe(viewModel.commentsLiveData, ::bindCommentsList)
         observe(viewModel.noDataLiveData, ::showNoDataView)
+
+        viewModel.getTaskDetails()
+        viewModel.getComments()
     }
 
     private fun showNoDataView(event: @ParameterName(name = "t") Event<Any>) {

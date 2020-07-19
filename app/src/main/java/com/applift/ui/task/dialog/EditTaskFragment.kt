@@ -11,6 +11,7 @@ import com.applift.R
 import com.applift.data.ViewModelFactory
 import com.applift.data.model.Task
 import com.applift.databinding.DialogEditTaskFragmentBinding
+import com.applift.extensions.hideKeyboard
 import com.applift.extensions.observe
 import com.applift.listeners.EditTaskCallback
 import dagger.android.support.AndroidSupportInjection
@@ -49,6 +50,7 @@ class EditTaskFragment(private val callback: EditTaskCallback) :
                 return@setOnClickListener
             }
             updateTask(task)
+            binding.title.hideKeyboard()
             dismiss()
         }
     }

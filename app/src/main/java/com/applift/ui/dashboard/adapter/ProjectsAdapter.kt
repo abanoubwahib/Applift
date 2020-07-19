@@ -30,4 +30,3 @@ class ProjectsAdapter(private val dashboardViewModel: DashboardViewModel,
         return projects.size
     }
 }
-

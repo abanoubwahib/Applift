@@ -19,12 +19,7 @@ import javax.inject.Inject
 class TaskViewModel @Inject
 constructor(private val mDataRepo: DataRepositorySource) : ViewModel() {
 
-    init {
-        getTaskDetails()
-        getComments()
-    }
-
-    private fun getTaskDetails() {
+    fun getTaskDetails() {
         viewModelScope.launch {
             wrapEspressoIdlingResource {
                 mDataRepo.getTaskById()?.collect {
@@ -49,7 +44,7 @@ constructor(private val mDataRepo: DataRepositorySource) : ViewModel() {
         }
     }
 
-    private fun getComments() {
+    fun getComments() {
         viewModelScope.launch {
             wrapEspressoIdlingResource {
                 mDataRepo.getAllComments()?.collect {

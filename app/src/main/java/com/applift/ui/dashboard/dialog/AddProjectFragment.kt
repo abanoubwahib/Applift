@@ -8,12 +8,12 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
 import com.applift.R
-import com.applift.databinding.AddProjectFragmentBinding
+import com.applift.databinding.DialogAddProjectFragmentBinding
 import com.applift.listeners.AddProjectCallback
 
 class AddProjectFragment(private val callback: AddProjectCallback) : DialogFragment() {
 
-    private lateinit var binding: AddProjectFragmentBinding
+    private lateinit var binding: DialogAddProjectFragmentBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +25,7 @@ class AddProjectFragment(private val callback: AddProjectCallback) : DialogFragm
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = AddProjectFragmentBinding.inflate(inflater, container, false)
+        binding = DialogAddProjectFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 

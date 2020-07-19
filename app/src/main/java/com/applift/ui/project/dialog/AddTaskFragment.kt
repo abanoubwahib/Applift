@@ -8,9 +8,7 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
 import com.applift.R
-import com.applift.databinding.AddProjectFragmentBinding
 import com.applift.databinding.AddTaskFragmentBinding
-import com.applift.listeners.AddProjectCallback
 import com.applift.listeners.AddTaskCallback
 
 class AddTaskFragment(private val callback: AddTaskCallback) : DialogFragment() {

@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.applift.data.ViewModelFactory
-import com.applift.databinding.TaskFragmentBinding
+import com.applift.databinding.FragmentTaskBinding
 import com.applift.ui.base.BaseFragment
 import javax.inject.Inject
 
 class TaskFragment : BaseFragment() {
 
-    private lateinit var binding: TaskFragmentBinding
+    private lateinit var binding: FragmentTaskBinding
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -23,7 +23,7 @@ class TaskFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = TaskFragmentBinding.inflate(inflater, container, false)
+        binding = FragmentTaskBinding.inflate(inflater, container, false)
         return binding.root
     }
 

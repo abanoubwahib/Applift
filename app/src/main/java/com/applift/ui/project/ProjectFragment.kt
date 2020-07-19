@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.applift.R
 import com.applift.data.ViewModelFactory
 import com.applift.data.model.Task
-import com.applift.databinding.ProjectFragmentBinding
+import com.applift.databinding.FragmentProjectBinding
 import com.applift.extensions.observe
 import com.applift.extensions.showToast
 import com.applift.extensions.toGone
@@ -22,7 +22,7 @@ import com.applift.utils.Event
 import javax.inject.Inject
 
 class ProjectFragment : BaseFragment(), AddTaskCallback {
-    private lateinit var binding: ProjectFragmentBinding
+    private lateinit var binding: FragmentProjectBinding
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -34,7 +34,7 @@ class ProjectFragment : BaseFragment(), AddTaskCallback {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = ProjectFragmentBinding.inflate(inflater, container, false)
+        binding = FragmentProjectBinding.inflate(inflater, container, false)
         return binding.root
     }
 

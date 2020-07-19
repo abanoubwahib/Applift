@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.applift.R
 import com.applift.data.ViewModelFactory
 import com.applift.data.model.Project
-import com.applift.databinding.DashboardFragmentBinding
+import com.applift.databinding.FragmentDashboardBinding
 import com.applift.utils.Event
 import com.applift.extensions.observe
 import com.applift.extensions.showToast
@@ -24,7 +24,7 @@ import javax.inject.Inject
 @Suppress("DEPRECATION")
 class DashboardFragment : BaseFragment(), AddProjectCallback {
 
-    private lateinit var binding: DashboardFragmentBinding
+    private lateinit var binding: FragmentDashboardBinding
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -40,7 +40,7 @@ class DashboardFragment : BaseFragment(), AddProjectCallback {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DashboardFragmentBinding.inflate(inflater, container, false)
+        binding = FragmentDashboardBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -74,8 +74,10 @@ class DashboardFragment : BaseFragment(), AddProjectCallback {
     }
 
     private fun showNoDataView(event: @ParameterName(name = "t") Event<Any>) {
-        binding.relativeNoData.toVisible()
-        binding.rvProjects.toGone()
+        if (!event.hasBeenHandled) {
+            binding.relativeNoData.toVisible()
+            binding.rvProjects.toGone()
+        }
     }
 
     private fun bindListData(projects: List<Project>) {
@@ -93,6 +95,8 @@ class DashboardFragment : BaseFragment(), AddProjectCallback {
     }
 
     private fun navigateToTasks(event: @ParameterName(name = "t") Event<Any>) {
-        findNavController().navigate(R.id.action_dashboardFragment_to_projectFragment, null)
+        if (!event.hasBeenHandled) {
+            findNavController().navigate(R.id.action_dashboardFragment_to_projectFragment, null)
+        }
     }
 }

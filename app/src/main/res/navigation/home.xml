@@ -9,7 +9,7 @@
         android:id="@+id/dashboardFragment"
         android:name="com.applift.ui.dashboard.DashboardFragment"
         android:label="dashboard_fragment"
-        tools:layout="@layout/dashboard_fragment">
+        tools:layout="@layout/fragment_dashboard">
 
         <action
             android:id="@+id/action_dashboardFragment_to_projectFragment"
@@ -25,7 +25,7 @@
         android:id="@+id/projectFragment"
         android:name="com.applift.ui.project.ProjectFragment"
         android:label="project_fragment"
-        tools:layout="@layout/project_fragment">
+        tools:layout="@layout/fragment_project">
         <action
             android:id="@+id/action_projectFragment_to_taskFragment"
             app:destination="@id/taskFragment"
@@ -40,6 +40,6 @@
         android:id="@+id/taskFragment"
         android:name="com.applift.ui.task.TaskFragment"
         android:label="task_fragment"
-        tools:layout="@layout/task_fragment" />
+        tools:layout="@layout/fragment_task" />
 
 </navigation>

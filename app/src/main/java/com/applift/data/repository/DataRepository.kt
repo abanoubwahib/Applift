@@ -6,6 +6,7 @@ import com.applift.data.model.Comment
 import com.applift.data.model.Project
 import com.applift.data.model.Task
 import com.applift.data.local.LocalData
+import com.applift.utils.IN_REVIEW
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import java.text.SimpleDateFormat
@@ -56,8 +57,8 @@ constructor(private val localData: LocalData) :
     }
 
     @ExperimentalCoroutinesApi
-    override suspend fun updateTask(task: Task): Flow<Int> {
-        return localData.updateTask(task)
+    override suspend fun updateTask(task: Task): Flow<Long>? {
+        return localData.insertTask(task)
     }
 
     @ExperimentalCoroutinesApi
@@ -66,8 +67,11 @@ constructor(private val localData: LocalData) :
     }
 
     @ExperimentalCoroutinesApi
-    override suspend fun insertComment(comment: Comment): Flow<Long> {
-        return localData.insertComment(comment)
+    override suspend fun insertComment(commentStr: String): Flow<Long>? {
+        return task?.id?.let {
+            val comment = Comment(it, commentStr)
+            return localData.insertComment(comment)
+        }
     }
 
     @ExperimentalCoroutinesApi
@@ -75,15 +79,33 @@ constructor(private val localData: LocalData) :
         return task?.id?.let { localData.getAllComments(it) }
     }
 
+    @ExperimentalCoroutinesApi
+    override suspend fun updateTaskStatus(): Flow<Long>? {
+        if (!task?.status.equals(IN_REVIEW)) {
+            task?.status = IN_REVIEW
+            return task?.let { localData.insertTask(it) }
+        }
+        return null
+    }
+
+    @ExperimentalCoroutinesApi
+    override suspend fun getTaskById(): Flow<Task>? {
+        return task?.id?.let { localData.getTaskById(it) }
+    }
+
     override fun saveProject(project: Project) {
         this.project = project
     }
 
-    override fun saveTask(task: Task) {
-        this.task = task
+    override fun getSavedProjectTitle(): String? {
+        return project?.name
     }
 
-    override fun getTaskTitle(): String? {
-        return this.task?.title
+    override fun getSavedTask(): Task? {
+        return task
+    }
+
+    override fun saveTask(task: Task) {
+        this.task = task
     }
 }

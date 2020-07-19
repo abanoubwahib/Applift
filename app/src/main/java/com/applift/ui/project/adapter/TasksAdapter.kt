@@ -30,4 +30,3 @@ class TasksAdapter(private val projectViewModel: ProjectViewModel,
         return tasks.size
     }
 }
-

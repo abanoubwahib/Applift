@@ -12,7 +12,7 @@ data class Comment(
     var task_id: Int,
 
     @ColumnInfo(name = "comment_str")
-    var comment_str: Int
+    var comment_str: String?
 ) {
 
     @NonNull

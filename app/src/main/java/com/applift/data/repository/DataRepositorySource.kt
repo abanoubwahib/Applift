@@ -8,18 +8,28 @@ import kotlinx.coroutines.flow.Flow
 interface DataRepositorySource {
 
     suspend fun insertProject(project_name: String): Flow<Long>
-    suspend fun getAllProjects(): Flow<List<Project>>
 
     suspend fun insertTask(taskName: String, taskDescription: String): Flow<Long>
-    suspend fun updateTask(task: Task): Flow<Int>
+
+    suspend fun insertComment(commentStr: String): Flow<Long>?
+
+    suspend fun getAllProjects(): Flow<List<Project>>
+
     suspend fun getAllTasks(): Flow<List<Task>>?
 
-    suspend fun insertComment(comment: Comment): Flow<Long>
     suspend fun getAllComments(): Flow<List<Comment>>?
+
+    suspend fun updateTask(task: Task): Flow<Long>?
+
+    suspend fun updateTaskStatus(): Flow<Long>?
+
+    suspend fun getTaskById(): Flow<Task>?
 
     fun saveProject(project: Project)
 
     fun saveTask(task: Task)
 
-    fun getTaskTitle(): String?
+    fun getSavedProjectTitle(): String?
+
+    fun getSavedTask(): Task?
 }

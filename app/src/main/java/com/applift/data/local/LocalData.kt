@@ -41,9 +41,9 @@ class LocalData @Inject constructor(
     }
 
     @ExperimentalCoroutinesApi
-    suspend fun updateTask(task: Task): Flow<Int> {
+    suspend fun updateTask(task: Task): Flow<Long>? {
         return flow {
-            emit(mTaskDao.updateTask(task))
+            emit(mTaskDao.insertTask(task))
         }.flowOn(Dispatchers.IO)
     }
 
@@ -65,6 +65,13 @@ class LocalData @Inject constructor(
     suspend fun getAllComments(task_id: Int): Flow<List<Comment>> {
         return flow {
             emit(mCommentDao.getAllComments(task_id))
+        }.flowOn(Dispatchers.IO)
+    }
+
+    @ExperimentalCoroutinesApi
+    suspend fun getTaskById(task_id: Int): Flow<Task> {
+        return flow {
+            emit(mTaskDao.getTaskById(task_id.toString()))
         }.flowOn(Dispatchers.IO)
     }
 }

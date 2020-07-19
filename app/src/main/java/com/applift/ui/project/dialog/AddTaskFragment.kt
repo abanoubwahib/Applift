@@ -8,12 +8,12 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
 import com.applift.R
-import com.applift.databinding.AddTaskFragmentBinding
+import com.applift.databinding.DialogAddTaskFragmentBinding
 import com.applift.listeners.AddTaskCallback
 
 class AddTaskFragment(private val callback: AddTaskCallback) : DialogFragment() {
 
-    private lateinit var binding: AddTaskFragmentBinding
+    private lateinit var binding: DialogAddTaskFragmentBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,14 +25,14 @@ class AddTaskFragment(private val callback: AddTaskCallback) : DialogFragment() 
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = AddTaskFragmentBinding.inflate(inflater, container, false)
+        binding = DialogAddTaskFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.add.setOnClickListener {
-            if (binding.title.equals("") || binding.description.equals("")) {
+            if (binding.title.toString().isEmpty() || binding.description.toString().isEmpty()) {
                 return@setOnClickListener
             }
             callback.onTaskAdded(binding.title.text.toString(), binding.description.text.toString())

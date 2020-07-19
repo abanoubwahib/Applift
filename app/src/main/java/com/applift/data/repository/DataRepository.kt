@@ -45,12 +45,14 @@ constructor(private val localData: LocalData) :
             sdf.format(Date())
         }
 
-        return localData.insertTask(Task(
-            title = taskName,
-            description = taskDescription,
-            createdDate = date,
-            project_id = project?.id.toString()
-        ))
+        return localData.insertTask(
+            Task(
+                title = taskName,
+                description = taskDescription,
+                createdDate = date,
+                project_id = project?.id.toString()
+            )
+        )
     }
 
     @ExperimentalCoroutinesApi
@@ -77,15 +79,11 @@ constructor(private val localData: LocalData) :
         this.project = project
     }
 
-    override fun getProject(): Project? {
-        return this.project
-    }
-
     override fun saveTask(task: Task) {
         this.task = task
     }
 
-    override fun getTask(): Task? {
-        return this.task
+    override fun getTaskTitle(): String? {
+        return this.task?.title
     }
 }

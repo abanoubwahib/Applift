@@ -19,8 +19,7 @@ interface DataRepositorySource {
 
     fun saveProject(project: Project)
 
-    fun getProject(): Project?
-
     fun saveTask(task: Task)
-    fun getTask(): Task?
+
+    fun getTaskTitle(): String?
 }

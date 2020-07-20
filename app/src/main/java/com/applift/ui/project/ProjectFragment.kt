@@ -19,6 +19,7 @@ import com.applift.ui.base.BaseFragment
 import com.applift.ui.project.adapter.TasksAdapter
 import com.applift.ui.project.dialog.AddTaskFragment
 import com.applift.utils.Event
+import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
 class ProjectFragment : BaseFragment(), AddTaskCallback {
@@ -53,6 +54,8 @@ class ProjectFragment : BaseFragment(), AddTaskCallback {
         viewModel.getScreenTitle()?.let {
             binding.projectTitle.text = it
         }
+
+        viewModel.getTasks()
     }
 
     override fun observeViewModel() {
@@ -60,8 +63,6 @@ class ProjectFragment : BaseFragment(), AddTaskCallback {
         observe(viewModel.insertTaskLiveData, ::showToast)
         observe(viewModel.noDataLiveData, ::showNoDataView)
         observe(viewModel.openTaskDetailsPrivate, ::navigateToTaskDetails)
-
-        viewModel.getTasks()
     }
 
     private fun showAddTaskDialog() {
@@ -76,15 +77,13 @@ class ProjectFragment : BaseFragment(), AddTaskCallback {
     }
 
     private fun showNoDataView(event: @ParameterName(name = "t") Event<Any>) {
-        if (!event.hasBeenHandled) {
-            binding.relativeNoData.toVisible()
-            binding.rvTasks.toGone()
-        }
+        binding.relativeNoTasks.toVisible()
+        binding.rvTasks.toGone()
     }
 
     private fun bindListData(list: @ParameterName(name = "t") List<Task>) {
+        binding.relativeNoTasks.toGone()
         binding.rvTasks.toVisible()
-        binding.relativeNoData.toGone()
         val adapter = TasksAdapter(projectViewModel = viewModel, tasks = list)
         binding.rvTasks.adapter = adapter
     }

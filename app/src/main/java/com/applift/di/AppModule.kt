@@ -1,6 +1,7 @@
 package com.applift.di
 
 import android.content.Context
+import androidx.annotation.VisibleForTesting
 import androidx.room.Room
 import com.applift.App
 import com.applift.data.persistence.CommentDao
@@ -8,6 +9,8 @@ import com.applift.data.persistence.MainDatabase
 import com.applift.data.persistence.ProjectDao
 import com.applift.data.persistence.TaskDao
 import com.applift.data.local.LocalData
+import com.applift.data.repository.DataRepository
+import com.applift.data.repository.DataRepositorySource
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

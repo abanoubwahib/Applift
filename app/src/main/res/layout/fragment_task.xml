@@ -2,9 +2,10 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/wholeTaskLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.applift.dashboard.DashboardFragment">
+    tools:context="com.applift.ui.dashboard.DashboardFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -194,7 +195,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
                 <RelativeLayout
-                    android:id="@+id/relativeNoData"
+                    android:id="@+id/relativeNoComments"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginTop="10dp"

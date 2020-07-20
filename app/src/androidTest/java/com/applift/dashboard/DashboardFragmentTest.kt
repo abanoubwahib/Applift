@@ -11,23 +11,16 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.applift.App
 import com.applift.R
-import com.applift.dashboard.adapter.ProjectsViewHolder
-import com.applift.di.DaggerAppComponent
+import com.applift.ui.dashboard.DashboardFragment
+import com.applift.ui.dashboard.adapter.ProjectsViewHolder
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.runBlocking
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class DashboardFragmentTest {
-
-    @Before
-    fun init() {
-        DaggerAppComponent.builder().application(App()).build()
-    }
 
     @Test
     fun addProjectTest() {

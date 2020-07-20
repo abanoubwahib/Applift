@@ -83,14 +83,14 @@ class TaskFragment : BaseFragment(), TaskPopupMenuListener, EditTaskCallback {
 
     private fun showNoDataView(event: @ParameterName(name = "t") Event<Any>) {
         if (!event.hasBeenHandled) {
-            binding.relativeNoData.toVisible()
+            binding.relativeNoComments.toVisible()
             binding.rvComments.toGone()
         }
     }
 
     private fun bindCommentsList(commentList: @ParameterName(name = "t") List<Comment>) {
         binding.rvComments.toVisible()
-        binding.relativeNoData.toGone()
+        binding.relativeNoComments.toGone()
         binding.rvComments.adapter = CommentsAdapter(commentList)
     }
 

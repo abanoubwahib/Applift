@@ -4,72 +4,76 @@ import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.navigation.Navigation
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.Espresso
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.applift.App
+import androidx.test.filters.LargeTest
+import com.applift.FakeDataRepository
 import com.applift.R
-import com.applift.dashboard.DashboardFragment
-import com.applift.dashboard.adapter.ProjectsViewHolder
-import com.applift.di.DaggerAppComponent
+import com.applift.data.model.Project
+import com.applift.data.repository.DataRepositorySource
+import com.applift.ui.project.ProjectFragment
+import com.applift.ui.project.adapter.TaskViewHolder
+import com.applift.utils.testing.AppTest
+import com.applift.utils.testing.DaggerTestAppComponent
 import com.google.common.truth.Truth.assertThat
+import dagger.android.AndroidInjection
+import dagger.android.support.AndroidSupportInjection
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import javax.inject.Inject
 
 @RunWith(AndroidJUnit4::class)
+@LargeTest
+@ExperimentalCoroutinesApi
 class ProjectFragmentTest {
+
+    @Inject
+    lateinit var mDataRepository: DataRepositorySource
 
     @Before
     fun init() {
-        DaggerAppComponent.builder().application(App()).build()
+        DaggerTestAppComponent.builder().application(AppTest()).build()
+        mDataRepository = FakeDataRepository()
     }
 
     @Test
     fun addTaskTest() {
+
+        val project = Project("project_name")
+        project.id = 1
+
+        mDataRepository.saveProject(project)
 
         runBlocking {
             val navController = TestNavHostController(
                 ApplicationProvider.getApplicationContext()
             ).apply {
                 setGraph(R.navigation.home)
-                setCurrentDestination(R.id.dashboardFragment)
+                setCurrentDestination(R.id.projectFragment)
             }
 
-            val dashboardScenario = launchFragmentInContainer<DashboardFragment>()
+            val projectScenario = launchFragmentInContainer<ProjectFragment>()
 
-            dashboardScenario.onFragment { fragment ->
+            projectScenario.onFragment { fragment ->
                 Navigation.setViewNavController(fragment.requireView(), navController)
             }
 
-            Espresso.onView(withId(R.id.fab)).perform(click())
+            onView(withId(R.id.fab)).perform(click())
 
-            Espresso.onView(withId(R.id.project)).perform(typeText("Project1"))
+            onView(withId(R.id.title)).perform(typeText("Task1"))
+            onView(withId(R.id.description)).perform(typeText("Description1"))
 
-            Espresso.onView(withId(R.id.add)).perform(click())
+            onView(withId(R.id.add)).perform(click())
 
-            Espresso.onView(withId(R.id.rvProjects)).perform(
-                RecyclerViewActions.actionOnItem<ProjectsViewHolder>(
-                    hasDescendant(
-                        withText("Project1")
-                    ), click()
-                )
-            )
-
-            Espresso.onView(withId(R.id.fab)).perform(click())
-
-            Espresso.onView(withId(R.id.title)).perform(typeText("Task1"))
-            
-            Espresso.onView(withId(R.id.description)).perform(typeText("Description1"))
-
-            Espresso.onView(withId(R.id.add)).perform(click())
-
-            Espresso.onView(withId(R.id.rvTasks)).perform(
-                RecyclerViewActions.actionOnItem<ProjectsViewHolder>(
+            onView(withId(R.id.rvTasks)).perform(
+                RecyclerViewActions.actionOnItem<TaskViewHolder>(
                     hasDescendant(
                         withText("Task1")
                     ), click()

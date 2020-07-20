@@ -1,4 +1,4 @@
-package com.applift.dashboard
+package com.applift.ui.dashboard
 
 import android.util.Log
 import androidx.annotation.VisibleForTesting

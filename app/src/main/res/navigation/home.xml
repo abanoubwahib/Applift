@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/dashboardFragment"
-        android:name="com.applift.dashboard.DashboardFragment"
+        android:name="com.applift.ui.dashboard.DashboardFragment"
         android:label="dashboard_fragment"
         tools:layout="@layout/fragment_dashboard">
 

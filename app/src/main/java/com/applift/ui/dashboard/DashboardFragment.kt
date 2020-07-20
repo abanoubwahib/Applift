@@ -1,4 +1,4 @@
-package com.applift.dashboard
+package com.applift.ui.dashboard
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,8 +15,8 @@ import com.applift.extensions.observe
 import com.applift.extensions.showToast
 import com.applift.listeners.AddProjectCallback
 import com.applift.ui.base.BaseFragment
-import com.applift.dashboard.adapter.ProjectsAdapter
-import com.applift.dashboard.dialog.AddProjectFragment
+import com.applift.ui.dashboard.adapter.ProjectsAdapter
+import com.applift.ui.dashboard.dialog.AddProjectFragment
 import com.applift.extensions.toGone
 import com.applift.extensions.toVisible
 import javax.inject.Inject

@@ -8,6 +8,8 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-platform-android'
 
+apply plugin: "androidx.navigation.safeargs.kotlin"
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -18,13 +20,16 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+//        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.applift.CustomTestRunner"
     }
 
     buildFeatures{
         viewBinding = true
     }
+
     buildTypes {
         debug {
             debuggable true
@@ -37,6 +42,7 @@ android {
     }
 
     flavorDimensions "default"
+
     productFlavors {
         mock {
             dimension = 'default'
@@ -46,27 +52,34 @@ android {
             dimension = 'default'
         }
     }
+
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
         sourceCompatibility JavaVersion.VERSION_1_8
     }
+
     productFlavors {
     }
-    defaultConfig {
-        testInstrumentationRunnerArguments clearPackageData: 'true'
-    }
+
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
     }
+
     packagingOptions {
         pickFirst 'META-INF/kotlinx-io.kotlin_module'
         pickFirst 'META-INF/atomicfu.kotlin_module'
         pickFirst 'META-INF/kotlinx-coroutines-core.kotlin_module'
         pickFirst 'META-INF/kotlinx-coroutines-io.kotlin_module'
     }
-    testOptions {
-        unitTests.returnDefaultValues = true
-        unitTests.includeAndroidResources = true
+
+    dataBinding {
+        enabled = true
+        enabledForTests = true
+    }
+
+    testOptions.unitTests {
+        includeAndroidResources = true
+        returnDefaultValues = true
     }
 }
 
@@ -110,8 +123,12 @@ dependencies {
     implementation deps.dagger.runtime
     implementation deps.dagger.android
     implementation deps.dagger.android_support
+
     kapt deps.dagger.compiler
+    kaptAndroidTest deps.dagger.compiler
+
     kapt deps.dagger.android_support_compiler
+//    kaptAndroidTest deps.dagger.android_support_compiler
 
     //Room
     implementation deps.room.runtime
@@ -129,8 +146,9 @@ dependencies {
     implementation deps.fragment.runtime_ktx
     implementation(deps.fragment.testing)
 
-    //Mockk
-    implementation deps.mockk
+//    //Mockk
+    implementation deps.mockito.core
+    implementation deps.mockito.android
 
     // Espresso and UI Testing
     androidTestImplementation deps.atsl.ext_junit

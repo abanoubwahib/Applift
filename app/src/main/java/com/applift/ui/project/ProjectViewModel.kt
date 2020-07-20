@@ -41,9 +41,11 @@ class ProjectViewModel
     }
 
     fun onAddTask(taskName: String, taskDescription: String) {
+        Log.d("ClassName", mDataRepo.javaClass.simpleName)
+
         viewModelScope.launch {
             wrapEspressoIdlingResource {
-                mDataRepo.insertTask(taskName,taskDescription).collect {
+                mDataRepo.insertTask(taskName, taskDescription).collect {
                     Log.d("Data Inserted", it.toString())
                     getTasks()
                 }

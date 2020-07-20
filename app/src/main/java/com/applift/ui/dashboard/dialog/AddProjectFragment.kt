@@ -1,4 +1,4 @@
-package com.applift.dashboard.dialog
+package com.applift.ui.dashboard.dialog
 
 import android.os.Bundle
 import android.util.DisplayMetrics

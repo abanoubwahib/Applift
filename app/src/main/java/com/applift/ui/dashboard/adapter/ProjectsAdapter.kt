@@ -1,4 +1,4 @@
-package com.applift.dashboard.adapter
+package com.applift.ui.dashboard.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.applift.data.model.Project
 import com.applift.databinding.ProjectItemBinding
 import com.applift.listeners.ProjectItemListener
-import com.applift.dashboard.DashboardViewModel
+import com.applift.ui.dashboard.DashboardViewModel
 
 class ProjectsAdapter(private val dashboardViewModel: DashboardViewModel,
                       private val projects: List<Project>) : RecyclerView.Adapter<ProjectsViewHolder>() {

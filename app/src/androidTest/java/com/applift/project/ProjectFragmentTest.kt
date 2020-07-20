@@ -34,7 +34,6 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 class ProjectFragmentTest {
 
-    @Inject
     lateinit var mDataRepository: DataRepositorySource
 
     @Before

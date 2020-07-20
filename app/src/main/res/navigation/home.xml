@@ -42,4 +42,13 @@
         android:label="task_fragment"
         tools:layout="@layout/fragment_task" />
 
+    <action
+        android:id="@+id/action_taskFragment_to_projectFragment"
+        app:destination="@id/projectFragment"
+        app:enterAnim="@anim/fragment_open_enter"
+        app:exitAnim="@anim/fragment_open_exit"
+        app:popEnterAnim="@anim/fragment_fade_enter"
+        app:popExitAnim="@anim/fragment_fade_exit"
+        app:popUpTo="@id/projectFragment" />
+
 </navigation>

@@ -60,10 +60,10 @@ class TaskFragment : BaseFragment(), TaskPopupMenuListener, EditTaskCallback {
         }
 
         binding.send.setOnClickListener {
-            binding.comment.hideKeyboard()
-            if (binding.comment.text.toString().isNotEmpty()) {
-                viewModel.addComment(binding.comment.text.toString())
-                binding.comment.setText("")
+            binding.editComment.hideKeyboard()
+            if (binding.editComment.text.toString().isNotEmpty()) {
+                viewModel.addComment(binding.editComment.text.toString())
+                binding.editComment.setText("")
             }
         }
     }
@@ -82,15 +82,13 @@ class TaskFragment : BaseFragment(), TaskPopupMenuListener, EditTaskCallback {
     }
 
     private fun showNoDataView(event: @ParameterName(name = "t") Event<Any>) {
-        if (!event.hasBeenHandled) {
-            binding.relativeNoComments.toVisible()
-            binding.rvComments.toGone()
-        }
+        binding.relativeNoComments.toVisible()
+        binding.rvComments.toGone()
     }
 
     private fun bindCommentsList(commentList: @ParameterName(name = "t") List<Comment>) {
-        binding.rvComments.toVisible()
         binding.relativeNoComments.toGone()
+        binding.rvComments.toVisible()
         binding.rvComments.adapter = CommentsAdapter(commentList)
     }
 

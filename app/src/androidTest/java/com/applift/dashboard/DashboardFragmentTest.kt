@@ -41,14 +41,14 @@ class DashboardFragmentTest {
 
             onView(withId(R.id.fab)).perform(click())
 
-            onView(withId(R.id.project)).perform(typeText("Project1"))
+            onView(withId(R.id.project)).perform(typeText("Project0"))
 
             onView(withId(R.id.add)).perform(click())
 
             onView(withId(R.id.rvProjects)).perform(
                 RecyclerViewActions.actionOnItem<ProjectsViewHolder>(
                     ViewMatchers.hasDescendant(
-                        ViewMatchers.withText("Project1")
+                        ViewMatchers.withText("Project0")
                     ), click()
                 )
             )

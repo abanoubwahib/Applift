@@ -63,15 +63,15 @@ class ProjectFragmentTest {
 
             onView(withId(R.id.fab)).perform(click())
 
-            onView(withId(R.id.title)).perform(typeText("Task1"))
-            onView(withId(R.id.description)).perform(typeText("Description1"))
+            onView(withId(R.id.title)).perform(typeText("Task0"))
+            onView(withId(R.id.description)).perform(typeText("Description0"))
 
             onView(withId(R.id.add)).perform(click())
 
             onView(withId(R.id.rvTasks)).perform(
                 RecyclerViewActions.actionOnItem<TaskViewHolder>(
                     hasDescendant(
-                        withText("Task1")
+                        withText("Task0")
                     ), click()
                 )
             )

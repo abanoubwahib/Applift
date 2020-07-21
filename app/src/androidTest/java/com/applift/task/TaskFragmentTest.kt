@@ -97,7 +97,7 @@ class TaskFragmentTest {
 
         mDataRepository.saveProject(project)
 
-        val task = Task("Task1", "Description1", "20-7-2020", project.id.toString())
+        val task = Task("Task0", "Description0", "20-7-2020", project.id.toString())
 
         mDataRepository.saveTask(task)
 
@@ -105,8 +105,8 @@ class TaskFragmentTest {
 
         onView(withId(R.id.ivOptions)).check(matches(isDisplayed()))
 
-        onView(withId(R.id.title)).check(matches(withText("Task1")))
-        onView(withId(R.id.description)).check(matches(withText("Description1")))
+        onView(withId(R.id.title)).check(matches(withText("Task0")))
+        onView(withId(R.id.description)).check(matches(withText("Description0")))
 
         onView(allOf(withId(R.id.ivOptions), withParent(withId(R.id.relative))))
             .check(matches(isDisplayed()))

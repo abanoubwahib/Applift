@@ -6,9 +6,14 @@ import com.applift.MainCoroutineRule
 import com.applift.repository.DataRepositorySource
 import com.applift.ui.dashboard.DashboardViewModel
 import com.applift.ui.project.ProjectViewModel
+import junit.framework.Assert
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.runBlocking
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
+import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class ProjectViewModelTest {
@@ -32,5 +37,32 @@ class ProjectViewModelTest {
     fun setupViewModel() {
         mDataRepo = FakeDataRepository()
         viewModel = ProjectViewModel(mDataRepo)
+    }
+
+    @Test
+    fun onTaskAdd_Test() {
+        runBlocking {
+            viewModel.onAddTask("Task0","Description0")
+
+            mDataRepo.getAllTasks()?.collect {
+                assertEquals(it[0].title, "Task0")
+            }
+        }
+    }
+
+    @Test
+    fun getTasks_Test() {
+        runBlocking {
+            mDataRepo.insertTask("Task0","Description0")
+            mDataRepo.insertTask("Task1","Description1")
+            mDataRepo.insertTask("Task2","Description2")
+            mDataRepo.insertTask("Task3","Description3")
+
+            mDataRepo.getAllTasks()?.collect{
+                assertNotNull(it)
+                assertNotEquals(it.size, 0)
+            }
+        }
+
     }
 }

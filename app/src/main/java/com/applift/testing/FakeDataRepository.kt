@@ -18,33 +18,37 @@ import javax.inject.Singleton
 class FakeDataRepository @Inject constructor() : DataRepositorySource {
 
 
-
     @ExperimentalCoroutinesApi
     override suspend fun insertProject(project_name: String): Flow<Long> {
+        counter_projects += 1
         return flow {
-            emit(1L)
+
+            emit(counter_projects.toLong())
         }.flowOn(Dispatchers.IO)
     }
 
     @ExperimentalCoroutinesApi
     override suspend fun insertTask(taskName: String, taskDescription: String): Flow<Long> {
+        counter_tasks += 1
         return flow {
-            emit(1L)
+            emit(counter_tasks.toLong())
         }.flowOn(Dispatchers.IO)
     }
 
     @ExperimentalCoroutinesApi
     override suspend fun insertComment(commentStr: String): Flow<Long>? {
+        counter_comments += 1
         return flow {
-            emit(1L)
+            emit(counter_comments.toLong())
         }.flowOn(Dispatchers.IO)
     }
 
     @ExperimentalCoroutinesApi
     override suspend fun getAllProjects(): Flow<List<Project>> {
         val projects = mutableListOf<Project>()
-
-        projects.add(Project("Project1"))
+        for (i in 0 until counter_projects) {
+            projects.add(Project("Project$i"))
+        }
 
         return flow {
             emit(projects)
@@ -54,9 +58,9 @@ class FakeDataRepository @Inject constructor() : DataRepositorySource {
     @ExperimentalCoroutinesApi
     override suspend fun getAllTasks(): Flow<List<Task>>? {
         val tasks = mutableListOf<Task>()
-
-        tasks.add(Task("Task1", "Description1", "", "1"))
-
+        for (i in 0 until counter_tasks) {
+            tasks.add(Task("Task$i", "Description1", "", "1"))
+        }
         return flow {
             emit(tasks)
         }.flowOn(Dispatchers.IO)
@@ -66,9 +70,9 @@ class FakeDataRepository @Inject constructor() : DataRepositorySource {
     override suspend fun getAllComments(): Flow<List<Comment>>? {
         val comments = mutableListOf<Comment>()
 
-        comments.add(Comment(1, "Comment1"))
-        comments.add(Comment(1, "Comment2"))
-
+        for (i in 0 until counter_comments) {
+            comments.add(Comment(1, "Comment$i"))
+        }
         return flow {
             emit(comments)
         }.flowOn(Dispatchers.IO)
@@ -112,8 +116,11 @@ class FakeDataRepository @Inject constructor() : DataRepositorySource {
         return task
     }
 
-    companion object{
+    companion object {
         lateinit var project: Project
         lateinit var task: Task
+        var counter_projects: Int = 0
+        var counter_tasks: Int = 0
+        var counter_comments: Int = 0
     }
 }

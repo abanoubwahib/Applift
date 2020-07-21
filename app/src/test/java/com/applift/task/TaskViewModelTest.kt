@@ -6,9 +6,14 @@ import com.applift.MainCoroutineRule
 import com.applift.repository.DataRepositorySource
 import com.applift.ui.project.ProjectViewModel
 import com.applift.ui.task.TaskViewModel
+import junit.framework.Assert.assertNotNull
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.runBlocking
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
+import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class TaskViewModelTest {
@@ -32,5 +37,32 @@ class TaskViewModelTest {
     fun setupViewModel() {
         mDataRepo = FakeDataRepository()
         viewModel = TaskViewModel(mDataRepo)
+    }
+
+    @Test
+    fun addComment_Test() {
+        runBlocking {
+            mDataRepo.insertComment("Comment0")
+
+            mDataRepo.getAllComments()?.collect {
+                assertNotNull(it)
+                Assert.assertEquals(it[0].comment_str, "Comment0")
+            }
+        }
+    }
+
+    @Test
+    fun getAllComments_Test() {
+        runBlocking {
+            mDataRepo.insertComment("Comment0")
+            mDataRepo.insertComment("Comment1")
+            mDataRepo.insertComment("Comment2")
+            mDataRepo.insertComment("Comment3")
+
+            mDataRepo.getAllComments()?.collect {
+                Assert.assertNotNull(it)
+                Assert.assertNotEquals(it.size, 0)
+            }
+        }
     }
 }

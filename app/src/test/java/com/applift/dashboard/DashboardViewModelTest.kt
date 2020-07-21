@@ -5,6 +5,9 @@ import com.applift.FakeDataRepository
 import com.applift.MainCoroutineRule
 import com.applift.repository.DataRepositorySource
 import com.applift.ui.dashboard.DashboardViewModel
+import com.google.common.truth.Truth.assertThat
+import junit.framework.Assert.assertEquals
+import junit.framework.Assert.assertNotNull
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
@@ -39,9 +42,22 @@ class DashboardViewModelTest {
     @Test
     fun onProjectAdd_Test() {
         runBlocking {
-            viewModel.onProjectAdd("Project1")
-            val list = mDataRepo.getAllProjects().collect {
+            viewModel.onProjectAdd("Project0")
+            mDataRepo.getAllProjects().collect {
+                assertEquals(it[0].name, "Project0")
+            }
+        }
+    }
 
+    @Test
+    fun getProjectsTest() {
+        runBlocking {
+            mDataRepo.insertProject("Project1")
+            mDataRepo.insertProject("Project2")
+            mDataRepo.insertProject("Project3")
+            mDataRepo.getAllProjects().collect {
+                assertNotNull(it)
+                assertEquals(it.size, 3)
             }
         }
     }

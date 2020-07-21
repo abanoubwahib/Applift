@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.applift.data.model.Comment
 import com.applift.data.model.Task
-import com.applift.data.repository.DataRepositorySource
+import com.applift.repository.DataRepositorySource
 import com.applift.utils.Event
 import com.applift.utils.IN_REVIEW
 import com.applift.utils.wrapEspressoIdlingResource

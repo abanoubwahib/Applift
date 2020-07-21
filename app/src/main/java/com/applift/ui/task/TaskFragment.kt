@@ -115,6 +115,9 @@ class TaskFragment : BaseFragment(), TaskPopupMenuListener, EditTaskCallback {
     }
 
     override fun onTaskUpdated(task: Task) {
+        binding.title.text = task.title
+        binding.description.text = task.description
+
         viewModel.updateTask(task)
     }
 }

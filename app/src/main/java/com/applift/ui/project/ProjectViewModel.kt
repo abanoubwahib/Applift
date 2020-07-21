@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.applift.data.model.Task
-import com.applift.data.repository.DataRepositorySource
+import com.applift.repository.DataRepositorySource
 import com.applift.utils.Event
 import com.applift.utils.wrapEspressoIdlingResource
 import kotlinx.coroutines.flow.collect

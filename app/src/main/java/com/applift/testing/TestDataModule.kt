@@ -1,8 +1,7 @@
 package com.applift
 
 import androidx.annotation.VisibleForTesting
-import com.applift.data.repository.DataRepositorySource
-import com.applift.di.ViewModelModule
+import com.applift.repository.DataRepositorySource
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

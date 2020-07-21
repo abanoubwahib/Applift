@@ -4,7 +4,7 @@ import androidx.annotation.VisibleForTesting
 import com.applift.data.model.Comment
 import com.applift.data.model.Project
 import com.applift.data.model.Task
-import com.applift.data.repository.DataRepositorySource
+import com.applift.repository.DataRepositorySource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -84,6 +84,7 @@ class FakeDataRepository @Inject constructor() : DataRepositorySource {
     @ExperimentalCoroutinesApi
     override suspend fun updateTaskStatus(status: String): Flow<Int>? {
         return flow {
+            task.status = status
             emit(1)
         }.flowOn(Dispatchers.IO)
     }
@@ -91,7 +92,7 @@ class FakeDataRepository @Inject constructor() : DataRepositorySource {
     @ExperimentalCoroutinesApi
     override suspend fun getTaskById(): Flow<Task>? {
         return flow {
-            emit(Task("Task1", "Description1", "", "1"))
+            emit(task)
         }.flowOn(Dispatchers.IO)
     }
 

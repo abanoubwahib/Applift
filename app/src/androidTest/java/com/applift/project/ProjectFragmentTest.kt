@@ -14,20 +14,17 @@ import androidx.test.filters.LargeTest
 import com.applift.FakeDataRepository
 import com.applift.R
 import com.applift.data.model.Project
-import com.applift.data.repository.DataRepositorySource
+import com.applift.repository.DataRepositorySource
 import com.applift.ui.project.ProjectFragment
 import com.applift.ui.project.adapter.TaskViewHolder
 import com.applift.utils.testing.AppTest
 import com.applift.utils.testing.DaggerTestAppComponent
 import com.google.common.truth.Truth.assertThat
-import dagger.android.AndroidInjection
-import dagger.android.support.AndroidSupportInjection
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import javax.inject.Inject
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest

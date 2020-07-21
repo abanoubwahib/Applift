@@ -1,4 +1,4 @@
-package com.applift.data.repository
+package com.applift.repository
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -6,10 +6,8 @@ import com.applift.data.model.Comment
 import com.applift.data.model.Project
 import com.applift.data.model.Task
 import com.applift.data.local.LocalData
-import com.applift.utils.IN_REVIEW
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter

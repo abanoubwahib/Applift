@@ -1,4 +1,4 @@
-package com.applift.data.repository
+package com.applift.repository
 
 import com.applift.data.model.Comment
 import com.applift.data.model.Project
